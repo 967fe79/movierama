@@ -37,7 +37,7 @@ Check that everything works by seeding the database with a few users and movies:
 As the application requires HTTPS, you will need a local setup that supports
 that.
 
-Follow [these instructions](http://dec0de.me/2014/10/pow-ssl/) if you usually
+Follow [these instructions](http://dec0de.me/2014/10/pow-ssl) if you usually
 use Pow; otherwise:
 
 Install `tunnelss`:
