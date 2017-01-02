@@ -24,9 +24,18 @@ RSpec.describe UserMailer, :type => :mailer do
       expect(mail.from).to eq(["no-reply@movierama.test"])
     end
 
-    it "renders the body" do
-      expect(mail.body.encoded).to include("Hi Recipient Name,")
-      expect(mail.body.encoded).to include("Voter Name liked your movie: Blade runner")
+    it "renders a multi-part body" do
+      expect(mail.body.parts.length).to eq(2)
+    end
+
+    it "renders the plain body" do
+      expect(mail.text_part.body.to_s).to include("Hi Recipient Name,")
+      expect(mail.text_part.body.to_s).to include("Voter Name liked your movie: Blade runner")
+    end
+
+    it "renders the HTML body" do
+      expect(mail.html_part.body.to_s).to include("<strong>Hi Recipient Name</strong>")
+      expect(mail.html_part.body.to_s).to include("Voter Name liked your movie: Blade runner")
     end
 
     describe "when a voter hates a movie" do
