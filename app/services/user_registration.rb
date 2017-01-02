@@ -30,10 +30,13 @@ class UserRegistration
     if user = User.find(uid: uid).first
       @user    = user
       @created = false
+      # Update email only if not previously set
+      @user.email ||= @auth_hash['info']['email']
     else
       @user = User.create(
-        uid:        uid, 
+        uid:        uid,
         name:       @auth_hash['info']['name'],
+        email:      @auth_hash['info']['email'],
         created_at: Time.current.utc.to_i
       )
       @created = true
