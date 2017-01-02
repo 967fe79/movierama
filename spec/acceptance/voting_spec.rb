@@ -11,7 +11,8 @@ RSpec.describe 'vote on movies', type: :feature do
   before do
     author = User.create(
       uid:  'null|12345',
-      name: 'Bob'
+      name: 'Bob',
+      email: 'bob@example.com'
     )
     Movie.create(
       title:        'Empire strikes back',
@@ -38,11 +39,19 @@ RSpec.describe 'vote on movies', type: :feature do
     it 'can like' do
       page.like('Empire strikes back')
       expect(page).to have_vote_message
+
+      movie_vote = ActionMailer::Base.deliveries.last
+      expect(movie_vote.to).to include "bob@example.com"
+      expect(movie_vote.subject).to match "Someone liked your movie"
     end
 
     it 'can hate' do
       page.hate('Empire strikes back')
       expect(page).to have_vote_message
+
+      movie_vote = ActionMailer::Base.deliveries.last
+      expect(movie_vote.to).to include "bob@example.com"
+      expect(movie_vote.subject).to match "Someone hated your movie"
     end
 
     it 'can unlike' do
@@ -76,6 +85,3 @@ RSpec.describe 'vote on movies', type: :feature do
   end
 
 end
-
-
-
