@@ -1,0 +1,3 @@
+UserMailer#movie_vote
+
+Hi, find me in app/views/user_mailer/movie_vote
