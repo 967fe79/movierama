@@ -30,4 +30,16 @@ RSpec.describe VotingBooth do
       voting_booth.vote(:like)
     end
   end
+
+  describe "Voting on a movie who's user doesn't have an email address" do
+
+    let(:user) {
+      User.create(id: 1, name: 'Recipient Name', email: nil)
+    }
+
+    it "should not try and send an email " do
+      expect(UserMailer).not_to receive(:movie_vote)
+      voting_booth.vote(:like)
+    end
+  end
 end
